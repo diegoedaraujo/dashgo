@@ -1,6 +1,5 @@
 import { Box, Stack, Text, Link, Icon } from "@chakra-ui/react";
 import {
-  RiContactsBookLine,
   RiContactsLine,
   RiDashboardLine,
   RiGitMergeLine,
