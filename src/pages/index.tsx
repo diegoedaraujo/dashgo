@@ -1,18 +1,26 @@
 import { Button, Flex, Stack } from "@chakra-ui/react";
 import { Input } from "../components/Form/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type SigInFormData = {
   email: string;
   password: string;
 };
 
+const sigInFormSchema = yup.object().shape({
+  email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
+  password: yup.string().required("Senha obrigatória"),
+});
 export default function SigIn() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitted },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(sigInFormSchema),
+  });
 
   console.log(errors.email);
 
@@ -39,9 +47,7 @@ export default function SigIn() {
             type="email"
             label="E-mail"
             error={errors.email}
-            {...register("email", {
-              required: "E-mail é obrigatório",
-            })}
+            {...register("email")}
           />
           <Input
             name="password"
