@@ -41,6 +41,7 @@ export default function SigIn() {
             name="password"
             type="password"
             label="Senha"
+            error={errors.password}
             {...register("password")}
           />
         </Stack>
