@@ -10,6 +10,8 @@ type SigInFormData = {
 export default function SigIn() {
   const { register, handleSubmit, formState } = useForm();
 
+  const { errors } = formState;
+
   const handleSignIn: SubmitHandler<SigInFormData> = (values) => {
     console.log(values);
   };
@@ -30,7 +32,10 @@ export default function SigIn() {
             name="email"
             type="email"
             label="E-mail"
-            {...register("email")}
+            error={errors.email}
+            {...register("email", {
+              required: "Email obrigatório",
+            })}
           />
           <Input
             name="password"
