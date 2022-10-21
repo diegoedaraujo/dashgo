@@ -8,11 +8,17 @@ type SigInFormData = {
 };
 
 export default function SigIn() {
-  const { register, handleSubmit, formState } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitted },
+  } = useForm();
 
-  const { errors } = formState;
+  console.log(errors.email);
 
-  const handleSignIn: SubmitHandler<SigInFormData> = (values) => {
+  const handleSignIn: SubmitHandler<SigInFormData> = async (values) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     console.log(values);
   };
   return (
@@ -34,7 +40,7 @@ export default function SigIn() {
             label="E-mail"
             error={errors.email}
             {...register("email", {
-              required: "Email obrigatório",
+              required: "E-mail é obrigatório",
             })}
           />
           <Input
@@ -51,7 +57,7 @@ export default function SigIn() {
           mt="6"
           colorScheme="pink"
           size="lg"
-          isLoading={formState.isSubmitting}
+          // isLoading={isSubmitted}
         >
           Entrar
         </Button>
