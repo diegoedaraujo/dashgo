@@ -17,7 +17,7 @@ export default function SigIn() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitted },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(sigInFormSchema),
   });
@@ -63,7 +63,7 @@ export default function SigIn() {
           mt="6"
           colorScheme="pink"
           size="lg"
-          // isLoading={isSubmitted}
+          isLoading={isSubmitting}
         >
           Entrar
         </Button>
