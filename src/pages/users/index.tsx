@@ -20,35 +20,12 @@ import { Sidebar } from "../../components/Sidebar";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useQuery } from "react-query";
+import { useUsers } from "../../services/hooks/useUsers";
 
 //Notas px é o padding horizontal
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery(
-    "users",
-    async () => {
-      const response = await fetch("http://localhost:3000/api/users");
-      const data = await response.json();
-      const users = data.users.map((user) => {
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          createdAt: new Date(user.createdAt).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }),
-        };
-      });
-      return users;
-    },
-    {
-      staleTime: 1000 * 5, // 5 seconds
-    }
-  );
+  const { data, isLoading, isFetching, error } = useUsers();
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -65,6 +42,9 @@ export default function UserList() {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Usuários
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
             </Heading>
             <Link href="/users/create" passHref>
               <Button
